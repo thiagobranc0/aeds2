@@ -62,11 +62,24 @@ public class App {
 //        PilhaDinamica<String> pilha = new PilhaDinamica<>();
 //        pilha.cancelaCaractere("PO#UCTE##-MIB#NADR##S", '#');
 
-        FilaDinamica<String> fila = new FilaDinamica<>();
+//        FilaDinamica<String> fila = new FilaDinamica<>();
 //        System.out.println(fila.xCx("HunterCHunter"));
-        fila.queue("a");
-        fila.queue("b");
-        fila.queue("c");
-        System.out.println(fila.frente("c"));
+//        fila.queue("a");
+//        fila.queue("b");
+//        fila.queue("c");
+//        System.out.println(fila.frente("c"));
+
+        ListaEstatica lista = new ListaEstatica(7);
+        lista.insertLast(2);
+        lista.insertLast(32);
+        lista.insertLast(47);
+        lista.insertLast(54);
+        lista.insertLast(68);
+        lista.insertLast(88);
+        lista.insertLast(92);
+
+        System.out.println(lista);
+
+        System.out.println(lista.buscaBinaria(88));
     }
 }

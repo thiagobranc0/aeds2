@@ -1,12 +1,12 @@
 import java.util.NoSuchElementException;
 
-public class ListaEstatica<E> {
+public class ListaEstatica<E extends Comparable<E>> {
     private int primeiro;
     private int ultimo;
     private E[] lista;
 
     public ListaEstatica(int tamanho) {
-        this.lista = (E[]) new Object[tamanho];
+        this.lista = (E[]) new Comparable[tamanho];
         this.primeiro = this.ultimo = 0;
     }
 
@@ -97,5 +97,37 @@ public class ListaEstatica<E> {
 
         E removedElement = lista[--this.ultimo];
         return removedElement;
+    }
+
+    public E buscaBinaria(E procurado) {
+        return buscadorBinario(this.primeiro, this.ultimo - 1, procurado);
+    }
+
+    private E buscadorBinario(int inicio, int fim, E procurado) {
+        int meio, comparacao;
+
+        if(inicio > fim) {
+            throw new NoSuchElementException("Elemento não encontrado!");
+        }
+
+        meio = (fim + inicio) / 2;
+        comparacao = procurado.compareTo(lista[meio]);
+
+        if(comparacao == 0) {
+            return lista[meio];
+        } else if(comparacao > 0) {
+            return buscadorBinario(meio + 1, fim, procurado);
+        } else {
+            return buscadorBinario(inicio, meio - 1, procurado);
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        for(int i = 0; i < this.ultimo; i++) {
+            str.append(lista[i] + "\n");
+        }
+        return str.toString();
     }
 }
