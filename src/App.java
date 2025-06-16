@@ -69,17 +69,34 @@ public class App {
 //        fila.queue("c");
 //        System.out.println(fila.frente("c"));
 
-        ListaEstatica lista = new ListaEstatica(7);
-        lista.insertLast(2);
-        lista.insertLast(32);
-        lista.insertLast(47);
-        lista.insertLast(54);
-        lista.insertLast(68);
-        lista.insertLast(88);
-        lista.insertLast(92);
+//        ListaEstatica lista = new ListaEstatica(7);
+//        lista.insertLast(2);
+//        lista.insertLast(32);
+//        lista.insertLast(47);
+//        lista.insertLast(54);
+//        lista.insertLast(68);
+//        lista.insertLast(88);
+//        lista.insertLast(92);
+//
+//        System.out.println(lista);
+//
+//        System.out.println(lista.buscaBinaria(88));
 
-        System.out.println(lista);
+        ABB<Integer, Integer> arvore = new ABB<>();
 
-        System.out.println(lista.buscaBinaria(88));
+        arvore.inserir(16, 16);
+        arvore.inserir(8, 8);
+        arvore.inserir(23, 23);
+        arvore.inserir(4, 4);
+        arvore.inserir(11, 11);
+        arvore.inserir(19, 19);
+        arvore.inserir(27, 27);
+        arvore.inserir(5, 5);
+
+        System.out.println(arvore.caminhamentoEmOrdem());
+
+        System.out.println(arvore.caminhamentoPreOrdem());
+
+        System.out.println(arvore.caminhamentoPosOrdem());
     }
 }
