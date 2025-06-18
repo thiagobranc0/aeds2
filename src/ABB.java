@@ -184,6 +184,59 @@ public class ABB<K, V> {
         }
     }
 
+    public String caminhamentoDescrescente() {
+        if(vazia()) {
+            throw new NoSuchElementException("Árvorervore vazia!");
+        }
 
+        return caminhamentoDescrescente(raiz);
+    }
+
+    protected String caminhamentoDescrescente(No<K, V> raizArvore) {
+        if(raizArvore != null) {
+            String conteudo = caminhamentoDescrescente(raizArvore.getDireita());
+            conteudo += raizArvore.getValue() + "\n";
+            conteudo += caminhamentoDescrescente(raizArvore.getEsquerda());
+
+            return conteudo;
+        } else {
+            return "";
+        }
+    }
+
+    public V obterMenor() {
+        if(vazia()) {
+            throw new NoSuchElementException("Árvore vazia");
+        }
+        V menor = obterMenor(raiz);
+        return menor;
+    }
+
+    protected V obterMenor(No<K, V> raizArvore) {
+        if(raizArvore.getEsquerda() != null) {
+            return obterMenor(raizArvore.getEsquerda());
+        } else {
+            return raizArvore.getValue();
+        }
+    }
+
+    public ABB<K, V> clone() {
+        ABB<K,V> clone = new ABB<>();
+        clone.raiz = this.clone(this.raiz);
+        return clone;
+    }
+
+
+    protected No<K, V> clone(No<K, V> raizArvore) {
+        if (raizArvore != null) {
+            No<K, V> NovoNo = raizArvore.clone();
+            NovoNo.setEsquerda(this.clone(raizArvore.getEsquerda()));
+            NovoNo.setDireita(this.clone(raizArvore.getDireita()));
+
+            return NovoNo;
+        } else {
+            return null;
+        }
+    }
 
 }

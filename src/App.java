@@ -84,6 +84,7 @@ public class App {
 
         ABB<Integer, Integer> arvore = new ABB<>();
 
+
         arvore.inserir(16, 16);
         arvore.inserir(8, 8);
         arvore.inserir(23, 23);
@@ -93,10 +94,28 @@ public class App {
         arvore.inserir(27, 27);
         arvore.inserir(5, 5);
 
+        ABB<Integer, Integer> arvoreClone = arvore.clone();
+
         System.out.println(arvore.caminhamentoEmOrdem());
+
+        System.out.println(arvoreClone.caminhamentoEmOrdem());
 
         System.out.println(arvore.caminhamentoPreOrdem());
 
+        System.out.println(arvoreClone.caminhamentoPreOrdem());
+
         System.out.println(arvore.caminhamentoPosOrdem());
+
+        System.out.println(arvoreClone.caminhamentoPosOrdem());
+
+        System.out.println(arvore.caminhamentoDescrescente());
+
+        System.out.println(arvoreClone.caminhamentoDescrescente());
+
+//        System.out.println(arvore.obterMenor());
+
+
+
+
     }
 }

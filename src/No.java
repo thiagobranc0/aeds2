@@ -53,5 +53,9 @@ public class No<K, V> {
         this.altura = Math.max(this.esquerda.getAltura(), this.direita.getAltura()) + 1;
     }
 
+    public No<K, V> clone() {
+        return new No<>(this.getKey(), this.getValue());
+    }
+
 
 }
