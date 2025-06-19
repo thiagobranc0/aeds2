@@ -54,7 +54,10 @@ public class No<K, V> {
     }
 
     public No<K, V> clone() {
-        return new No<>(this.getKey(), this.getValue());
+        No<K, V> NoClone = new No<>(this.getKey(), this.getValue());
+        NoClone.setEsquerda(this.getEsquerda());
+        NoClone.setDireita(this.getDireita());
+        return NoClone;
     }
 
 

@@ -1,5 +1,7 @@
 import java.util.Comparator;
 import java.util.NoSuchElementException;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class ABB<K, V> {
     private No<K, V> raiz;
@@ -221,22 +223,160 @@ public class ABB<K, V> {
     }
 
     public ABB<K, V> clone() {
-        ABB<K,V> clone = new ABB<>();
-        clone.raiz = this.clone(this.raiz);
+        ABB<K,V> clone = new ABB<>(this.comparador);
+        clone.raiz = this.clone(this.raiz, clone);
         return clone;
     }
 
 
-    protected No<K, V> clone(No<K, V> raizArvore) {
+    protected No<K, V> clone(No<K, V> raizArvore, ABB<K,V> arvoreClone) {
         if (raizArvore != null) {
             No<K, V> NovoNo = raizArvore.clone();
-            NovoNo.setEsquerda(this.clone(raizArvore.getEsquerda()));
-            NovoNo.setDireita(this.clone(raizArvore.getDireita()));
+            NovoNo.setEsquerda(this.clone(raizArvore.getEsquerda(), arvoreClone));
+            NovoNo.setDireita(this.clone(raizArvore.getDireita(), arvoreClone));
+
+            arvoreClone.tamanho++;
 
             return NovoNo;
         } else {
             return null;
         }
+    }
+
+    public boolean ehRaiz(K chave) {
+        if(vazia()) {
+            throw new NoSuchElementException("Árvore vazia!");
+        }
+        return this.raiz.getKey().equals(chave);
+    }
+
+    public ABB<K, V> obterSubconjuntoMaiores(K chave) {
+        ABB<K, V> subconjunto = new ABB<>(this.comparador);
+        subconjunto.raiz = obterSubconjuntoMaiores(chave, this.raiz);
+        return subconjunto.clone();
+    }
+
+    protected No<K, V> obterSubconjuntoMaiores(K chave, No<K, V> raizArvore) {
+        int comparacao;
+
+        if(raizArvore == null) {
+            throw new NoSuchElementException("Árvore vazia!");
+        }
+
+        comparacao = this.comparador.compare(chave, raizArvore.getKey());
+
+        if(comparacao == 0) {
+            No<K, V> NovoNo = raizArvore.clone();
+            NovoNo.setEsquerda(null);
+            return NovoNo;
+        } else if(comparacao < 0) {
+            return obterSubconjuntoMaiores(chave, raizArvore.getEsquerda());
+        } else {
+            return obterSubconjuntoMaiores(chave, raizArvore.getDireita());
+        }
+    }
+
+    public int tamanho() {
+        return tamanho;
+    }
+
+    public int contadorDeNos() {
+        return contadorDeNos(this.raiz);
+    }
+
+    protected int contadorDeNos(No<K, V> raizArvore) {
+        int contador = 0;
+
+        if(raizArvore != null) {
+            contador++;
+            contador += contadorDeNos(raizArvore.getEsquerda());
+            contador += contadorDeNos(raizArvore.getDireita());
+        }
+
+        return contador;
+    }
+
+    public No<K, V> econtrarNo(K chave) {
+        return encontrarNo(this.raiz, chave);
+    }
+
+    protected No<K, V> encontrarNo(No<K, V> raizArvore, K chave) {
+        int comparacao;
+
+        if(raizArvore == null) {
+            throw new NoSuchElementException("Elemento não encontrado!");
+        }
+
+        comparacao = this.comparador.compare(chave, raizArvore.getKey());
+
+        if(comparacao == 0) {
+            return raizArvore;
+        } else if(comparacao < 0) {
+            return encontrarNo(raizArvore.getEsquerda(), chave);
+        } else {
+            return encontrarNo(raizArvore.getDireita(), chave);
+        }
+    }
+
+    public V obterAntecessor(K chave) {
+        No<K, V> procurado = encontrarNo(this.raiz, chave);
+
+        if(procurado.getEsquerda() == null) {
+            throw new NoSuchElementException("Elemento não possui antecessor!");
+        }
+
+        return obterAntecessor(procurado.getEsquerda()).getValue();
+    }
+
+    protected No<K, V> obterAntecessor(No<K, V> antecessor) {
+        if(antecessor.getDireita() != null) {
+            return obterAntecessor(antecessor.getDireita());
+        } else {
+            return antecessor;
+        }
+
+    }
+
+    public Double calcularValorMedio(Function<V,Double> extrator) {
+        if(vazia()) {
+            throw new NoSuchElementException("Árvore vazia!");
+        }
+
+        return (calcularValorMedio(extrator, this.raiz) / this.contadorDeNos());
+    }
+
+    protected Double calcularValorMedio(Function<V,Double> extrator, No<K, V> raizArvore) {
+        Double valor = 0.0;
+
+        if(raizArvore != null) {
+           valor += extrator.apply(raizArvore.getValue());
+           valor += calcularValorMedio(extrator, raizArvore.getEsquerda());
+           valor += calcularValorMedio(extrator, raizArvore.getDireita());
+        }
+
+        return valor;
+    }
+
+    public int contarSe(Predicate<V> condicional) {
+        if(vazia()) {
+            throw new NoSuchElementException("Árvore vazia!");
+        }
+
+        return contarSe(condicional, this.raiz);
+    }
+
+    protected int contarSe(Predicate<V> condicional, No<K, V> raizArvore) {
+        int contador = 0;
+
+        if(raizArvore != null) {
+            if(condicional.test(raizArvore.getValue())) {
+                contador++;
+            }
+            contador += contarSe(condicional, raizArvore.getEsquerda());
+            contador += contarSe(condicional, raizArvore.getDireita());
+        }
+
+        return contador;
     }
 
 }

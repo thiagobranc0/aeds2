@@ -82,19 +82,19 @@ public class App {
 //
 //        System.out.println(lista.buscaBinaria(88));
 
-        ABB<Integer, Integer> arvore = new ABB<>();
+        ABB<Integer, Double> arvore = new ABB<>();
 
 
-        arvore.inserir(16, 16);
-        arvore.inserir(8, 8);
-        arvore.inserir(23, 23);
-        arvore.inserir(4, 4);
-        arvore.inserir(11, 11);
-        arvore.inserir(19, 19);
-        arvore.inserir(27, 27);
-        arvore.inserir(5, 5);
+        arvore.inserir(16, 16.0);
+        arvore.inserir(8, 8.0);
+        arvore.inserir(23, 23.0);
+        arvore.inserir(4, 4.0);
+        arvore.inserir(11, 11.0);
+        arvore.inserir(19, 19.0);
+        arvore.inserir(27, 27.0);
+        arvore.inserir(5, 5.0);
 
-        ABB<Integer, Integer> arvoreClone = arvore.clone();
+        ABB<Integer, Double> arvoreClone = arvore.clone();
 
         System.out.println(arvore.caminhamentoEmOrdem());
 
@@ -114,6 +114,20 @@ public class App {
 
 //        System.out.println(arvore.obterMenor());
 
+//        arvoreClone = arvore.obterSubconjuntoMaiores(16);
+
+//        System.out.println(arvoreClone.caminhamentoEmOrdem() + "Tamanho do conjunto: " + arvoreClone.tamanho());
+//        System.out.println(arvore.obterAntecessor(90));
+
+//        System.out.println(arvoreClone.calcularValorMedio((valor -> valor.doubleValue())));
+
+        System.out.println(arvore.contarSe((valor -> {
+            if (valor >= 4 && valor <= 5) {
+                return true;
+            }
+
+            return false;
+        })));
 
 
 
