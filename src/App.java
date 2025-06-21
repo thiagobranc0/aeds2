@@ -112,6 +112,8 @@ public class App {
 
         System.out.println(arvoreClone.caminhamentoDescrescente());
 
+        System.out.println(arvore.obterSucessor(11.0));
+
 //        System.out.println(arvore.obterMenor());
 
 //        arvoreClone = arvore.obterSubconjuntoMaiores(16);
@@ -121,13 +123,13 @@ public class App {
 
 //        System.out.println(arvoreClone.calcularValorMedio((valor -> valor.doubleValue())));
 
-        System.out.println(arvore.contarSe((valor -> {
-            if (valor >= 4 && valor <= 5) {
-                return true;
-            }
-
-            return false;
-        })));
+//        System.out.println(arvore.contarSe((valor -> {
+//            if (valor >= 4 && valor <= 5) {
+//                return true;
+//            }
+//
+//            return false;
+//        })));
 
 
 

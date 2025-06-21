@@ -3,7 +3,7 @@ import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class ABB<K, V> {
+public class ABB<K, V extends Comparable<V>> {
     private No<K, V> raiz;
     private Comparator<K> comparador;
     private int tamanho;
@@ -377,6 +377,39 @@ public class ABB<K, V> {
         }
 
         return contador;
+    }
+
+    public V obterSucessor(V valor) {
+        return acharValor(this.raiz, valor);
+    }
+
+    protected V acharValor(No<K, V> raizArvore, V valor) {
+        int comparacao;
+
+        if(raizArvore == null) {
+            throw new NoSuchElementException("Elemento não encontrado na árvore");
+        }
+
+        comparacao = valor.compareTo(raizArvore.getValue());
+
+        if(comparacao == 0) {
+            if(raizArvore.getDireita() == null) {
+                throw new NoSuchElementException("O elemento não possui sucessor!");
+            }
+            return obterSucessor(raizArvore.getDireita());
+        } else if(comparacao < 0) {
+            return acharValor(raizArvore.getEsquerda(), valor);
+        } else {
+            return acharValor(raizArvore.getDireita(), valor);
+        }
+    }
+
+    protected V obterSucessor(No<K, V> raizArvore) {
+        if(raizArvore.getEsquerda() == null) {
+            return raizArvore.getValue();
+        } else {
+            return obterSucessor(raizArvore.getEsquerda());
+        }
     }
 
 }

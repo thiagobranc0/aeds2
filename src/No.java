@@ -45,6 +45,14 @@ public class No<K, V> {
         this.direita = direita;
     }
 
+    public int getAltura(No<K, V> no) {
+        if(no != null) {
+            return no.getAltura();
+        } else {
+            return -1;
+        }
+    }
+
     public int getAltura() {
         return this.altura;
     }
@@ -54,10 +62,14 @@ public class No<K, V> {
     }
 
     public No<K, V> clone() {
-        No<K, V> NoClone = new No<>(this.getKey(), this.getValue());
-        NoClone.setEsquerda(this.getEsquerda());
-        NoClone.setDireita(this.getDireita());
+        No<K, V> NoClone = new No<>(this.key, this.value);
+        NoClone.setEsquerda(this.esquerda);
+        NoClone.setDireita(this.direita);
         return NoClone;
+    }
+
+    public int getFatorBalanceamento() {
+        return (this.getAltura(this.esquerda) - this.getAltura(this.direita));
     }
 
 
