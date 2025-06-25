@@ -82,37 +82,39 @@ public class App {
 //
 //        System.out.println(lista.buscaBinaria(88));
 
-        ABB<Integer, Double> arvore = new ABB<>();
+//        ABB<Integer, Double> arvore = new ABB<>();
+//
+//
+//        arvore.inserir(16, 16.0);
+//        arvore.inserir(8, 8.0);
+//        arvore.inserir(23, 23.0);
+//        arvore.inserir(4, 4.0);
+//        arvore.inserir(11, 11.0);
+//        arvore.inserir(19, 19.0);
+//        arvore.inserir(27, 27.0);
+//        arvore.inserir(5, 5.0);
+//
+//        System.out.println(arvore.verificarEstrita());
 
-
-        arvore.inserir(16, 16.0);
-        arvore.inserir(8, 8.0);
-        arvore.inserir(23, 23.0);
-        arvore.inserir(4, 4.0);
-        arvore.inserir(11, 11.0);
-        arvore.inserir(19, 19.0);
-        arvore.inserir(27, 27.0);
-        arvore.inserir(5, 5.0);
-
-        ABB<Integer, Double> arvoreClone = arvore.clone();
-
-        System.out.println(arvore.caminhamentoEmOrdem());
-
-        System.out.println(arvoreClone.caminhamentoEmOrdem());
-
-        System.out.println(arvore.caminhamentoPreOrdem());
-
-        System.out.println(arvoreClone.caminhamentoPreOrdem());
-
-        System.out.println(arvore.caminhamentoPosOrdem());
-
-        System.out.println(arvoreClone.caminhamentoPosOrdem());
-
-        System.out.println(arvore.caminhamentoDescrescente());
-
-        System.out.println(arvoreClone.caminhamentoDescrescente());
-
-        System.out.println(arvore.obterSucessor(11.0));
+//        ABB<Integer, Double> arvoreClone = arvore.clone();
+//
+//        System.out.println(arvore.caminhamentoEmOrdem());
+//
+//        System.out.println(arvoreClone.caminhamentoEmOrdem());
+//
+//        System.out.println(arvore.caminhamentoPreOrdem());
+//
+//        System.out.println(arvoreClone.caminhamentoPreOrdem());
+//
+//        System.out.println(arvore.caminhamentoPosOrdem());
+//
+//        System.out.println(arvoreClone.caminhamentoPosOrdem());
+//
+//        System.out.println(arvore.caminhamentoDescrescente());
+//
+//        System.out.println(arvoreClone.caminhamentoDescrescente());
+//
+//        System.out.println(arvore.obterSucessor(11.0));
 
 //        System.out.println(arvore.obterMenor());
 
@@ -131,6 +133,33 @@ public class App {
 //            return false;
 //        })));
 
+        HashIndireto<Integer, String> tabela = new HashIndireto<>(11);
+//
+        tabela.inserir(35, "Gustave");
+        tabela.inserir(49, "Maelle");
+        tabela.inserir(11, "Lune");
+        tabela.inserir(18, "Monoco");
+        tabela.inserir(13, "Sciel");
+        tabela.inserir(29, "Verso");
+        tabela.inserir(32, "Renoir");
+        tabela.inserir(90, "Elisa");
+        System.out.println(tabela.vazia());
+        tabela.substituir(1, "Verso");
+        System.out.println(tabela.pesquisar(1));
+        System.out.println(tabela.remover(2));
+
+        Rehash<Integer, Integer> table = new Rehash<>(13);
+        table.inserir(7, 7);
+        table.inserir(22, 22);
+        table.inserir(42, 42);
+        table.inserir(16, 16);
+        table.inserir(34, 34);
+        table.inserir(20, 20);
+        table.inserir(19, 19);
+        table.inserir(3, 3);
+        table.inserir(29, 29);
+
+        System.out.println(table);
 
 
     }

@@ -232,8 +232,8 @@ public class ABB<K, V extends Comparable<V>> {
     protected No<K, V> clone(No<K, V> raizArvore, ABB<K,V> arvoreClone) {
         if (raizArvore != null) {
             No<K, V> NovoNo = raizArvore.clone();
-            NovoNo.setEsquerda(this.clone(raizArvore.getEsquerda(), arvoreClone));
-            NovoNo.setDireita(this.clone(raizArvore.getDireita(), arvoreClone));
+            NovoNo.setEsquerda(clone(raizArvore.getEsquerda(), arvoreClone));
+            NovoNo.setDireita(clone(raizArvore.getDireita(), arvoreClone));
 
             arvoreClone.tamanho++;
 
@@ -410,6 +410,36 @@ public class ABB<K, V extends Comparable<V>> {
         } else {
             return obterSucessor(raizArvore.getEsquerda());
         }
+    }
+
+    public boolean verificarEstrita() {
+        if(vazia()) {
+            throw new NoSuchElementException("Lista vazia");
+        }
+        return verificarEstrita(this.raiz);
+    }
+
+    protected boolean verificarEstrita(No<K, V> raizArvore) {
+        boolean estrita = true;
+
+        if(raizArvore != null) {
+            if(raizArvore.getEsquerda() == null && raizArvore.getDireita() != null) {
+                return false;
+            }
+            if(raizArvore.getEsquerda() != null && raizArvore.getDireita() == null) {
+                return false;
+            }
+
+            estrita = verificarEstrita(raizArvore.getEsquerda());
+
+            if(!estrita) {
+                return estrita;
+            }
+
+            estrita = verificarEstrita(raizArvore.getDireita());
+        }
+
+        return estrita;
     }
 
 }

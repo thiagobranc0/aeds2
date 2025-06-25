@@ -209,7 +209,6 @@ public class ListaDinamica<E> {
         if(isEmpty()) {
             throw new NoSuchElementException("Lista vazia");
         }
-
 //        Celula<E> aux = primeiro;
 //
 //        while(aux.getProxima() != null) {
@@ -224,11 +223,24 @@ public class ListaDinamica<E> {
 
         for(int i = 0; i < tamanho; i++) {
             if(auxiliar.getItem().equals(item)) {
-                return item;
+                return auxiliar.getItem();
             }
             auxiliar = auxiliar.getProxima();
         }
 
         throw new NoSuchElementException();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        Celula<E> aux = primeiro.getProxima();
+
+        for(int i = 0; i < tamanho; i++) {
+            builder.append(aux.getItem().toString());
+            aux = aux.getProxima();
+        }
+
+        return builder.toString();
     }
 }
