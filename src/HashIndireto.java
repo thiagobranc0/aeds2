@@ -34,6 +34,51 @@ public class HashIndireto<K, V> {
         return true;
     }
 
+    public int inserir(K chave, V valor) {
+        int posicao = funcaoHash(chave);
+
+        Entrada<K, V> entrada = new Entrada<>(chave, valor);
+
+        try{
+            tabelaHash[posicao].localizarByItem(entrada);
+            throw new IllegalArgumentException("Item já inserido na tabela");
+        } catch(NoSuchElementException e) {
+            tabelaHash[posicao].insertLast(entrada);
+            return posicao;
+        }
+    }
+
+    public V pesquisar(K chave) {
+        int posicao = funcaoHash(chave);
+
+        Entrada<K, V> procurado = new Entrada<>(chave, null);
+
+        return tabelaHash[posicao].localizarByItem(procurado).getValor();
+    }
+
+    public V remover(K chave) {
+        int posicao = funcaoHash(chave);
+
+        Entrada<K, V> procurado = new Entrada<>(chave, null);
+        V entrada;
+
+        try {
+           entrada = tabelaHash[posicao].removeByItem(procurado).getValor();
+        } catch(NoSuchElementException e) {
+            throw new NoSuchElementException("Item não existe");
+        }
+
+        return entrada;
+    }
+
+    public void substituir(K chave, V valor) {
+        int posicao = funcaoHash(chave);
+
+        Entrada<K, V> procurado = tabelaHash[posicao].localizarByItem(new Entrada<>(chave, null));
+
+        procurado.setValor(valor);
+    }
+
     public boolean contemValor(V valor) {
 //        for (int i = 0; i < capacidade; i++) {
 //            ListaDinamica<Entrada<K, V>> lista = tabelaHash[i];
@@ -91,51 +136,6 @@ public class HashIndireto<K, V> {
             }
         }
         return todosValores;
-    }
-
-    public int inserir(K chave, V valor) {
-        int posicao = funcaoHash(chave);
-
-        Entrada<K, V> entrada = new Entrada<>(chave, valor);
-
-        try{
-            tabelaHash[posicao].localizarByItem(entrada);
-            throw new IllegalArgumentException("Item já inserido na tabela");
-        } catch(NoSuchElementException e) {
-            tabelaHash[posicao].insertLast(entrada);
-            return posicao;
-        }
-    }
-
-    public V pesquisar(K chave) {
-        int posicao = funcaoHash(chave);
-
-        Entrada<K, V> procurado = new Entrada<>(chave, null);
-
-        return tabelaHash[posicao].localizarByItem(procurado).getValor();
-    }
-
-    public V remover(K chave) {
-        int posicao = funcaoHash(chave);
-
-        Entrada<K, V> procurado = new Entrada<>(chave, null);
-        V entrada;
-
-        try {
-           entrada = tabelaHash[posicao].removeByItem(procurado).getValor();
-        } catch(NoSuchElementException e) {
-            throw new NoSuchElementException("Item não existe");
-        }
-
-        return entrada;
-    }
-
-    public void substituir(K chave, V valor) {
-        int posicao = funcaoHash(chave);
-
-        Entrada<K, V> procurado = tabelaHash[posicao].localizarByItem(new Entrada<>(chave, null));
-
-        procurado.setValor(valor);
     }
 
     public int tamanho() {

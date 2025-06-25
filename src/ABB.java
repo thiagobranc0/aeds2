@@ -223,9 +223,9 @@ public class ABB<K, V extends Comparable<V>> {
     }
 
     public ABB<K, V> clone() {
-        ABB<K,V> clone = new ABB<>(this.comparador);
-        clone.raiz = this.clone(this.raiz, clone);
-        return clone;
+        ABB<K,V> arvoreClone = new ABB<>(this.comparador);
+        arvoreClone.raiz = this.clone(this.raiz, arvoreClone);
+        return arvoreClone;
     }
 
 
@@ -266,13 +266,40 @@ public class ABB<K, V extends Comparable<V>> {
         comparacao = this.comparador.compare(chave, raizArvore.getKey());
 
         if(comparacao == 0) {
-            No<K, V> NovoNo = raizArvore.clone();
-            NovoNo.setEsquerda(null);
-            return NovoNo;
+            No<K, V> subconjunto = raizArvore.clone();
+            subconjunto.setEsquerda(null);
+            return subconjunto;
         } else if(comparacao < 0) {
             return obterSubconjuntoMaiores(chave, raizArvore.getEsquerda());
         } else {
             return obterSubconjuntoMaiores(chave, raizArvore.getDireita());
+        }
+    }
+
+    public ABB<K, V> obterSubConjuntoMenores(K chave) {
+        ABB<K, V> subconjunto = new ABB<>(this.comparador);
+        subconjunto.raiz = obterSubconjuntoMenores(chave, this.raiz);
+        subconjunto.tamanho = subconjunto.contadorDeNos();
+        return subconjunto;
+    }
+
+    protected No<K, V> obterSubconjuntoMenores(K chave, No<K, V> raizArvore) {
+        int comparacao;
+
+        if(raizArvore == null) {
+            throw new NoSuchElementException("Árvore vazia!");
+        }
+
+        comparacao = this.comparador.compare(chave, raizArvore.getKey());
+
+        if(comparacao == 0) {
+            No<K, V> subconjunto = raizArvore.clone();
+            subconjunto.setDireita(null);
+            return subconjunto;
+        } else if(comparacao < 0) {
+            return obterSubconjuntoMenores(chave, raizArvore.getEsquerda());
+        } else {
+            return obterSubconjuntoMenores(chave, raizArvore.getDireita());
         }
     }
 
@@ -430,13 +457,7 @@ public class ABB<K, V extends Comparable<V>> {
                 return false;
             }
 
-            estrita = verificarEstrita(raizArvore.getEsquerda());
-
-            if(!estrita) {
-                return estrita;
-            }
-
-            estrita = verificarEstrita(raizArvore.getDireita());
+            return (verificarEstrita(raizArvore.getEsquerda()) && verificarEstrita(raizArvore.getDireita()));
         }
 
         return estrita;
